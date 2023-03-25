@@ -1,6 +1,9 @@
+from termcolor import colored
+import time
 import subprocess
 
-pythonDependencies = ["termcolor","colorama"]
+pythonDependencies = ["termcolor", "colorama","validators","webp","Pillow"]
+chocoDependencies = ["WebP"]
 
 print("Installing Chocolatey")
 powerShellPolicyResult = subprocess.call(
@@ -17,14 +20,20 @@ if chocoInstallResult != 0:
     quit()
 
 
-
+print("Installing python dependencies")
 for dep in pythonDependencies:
-   depResult = subprocess.call(['pip', 'install', dep])
-   if depResult != 0:
-    print(f"Failed to install python dependency {dep}")
+    print(f"Installing {dep}")
+    depResult = subprocess.call(['pip', 'install', dep])
+    if depResult != 0:
+        print(f"Failed to install python dependency {dep}")
 
-import time
-from termcolor import colored
+print("Installing choco dependencies")
+for dep in chocoDependencies:
+    print(f"Installing {dep}")
+    depResult = subprocess.call(['choco', 'install', dep, '-y'])
+    if depResult != 0:
+        print(f"Failed to install choco dependency {dep}")
+
 
 text = 'Done installing!'
 colors = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta']
@@ -34,7 +43,6 @@ while time.time() - start_time < 2:
     for color in colors:
         print(colored(text, color), end='\r')
         time.sleep(0.1)
-        
+
 
 print(colored(text, colors[-1]))
-
