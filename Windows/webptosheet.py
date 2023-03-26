@@ -47,7 +47,6 @@ def main(argv):
 
 def convert(path, rows, outputName):
 
-    print(outputName)
     webp_image = Image.open(path)
     sprites = [frame.copy().convert('RGBA')
                for frame in ImageSequence.Iterator(webp_image)]
@@ -61,7 +60,6 @@ def convert(path, rows, outputName):
 
 def create_sprite_sheet(sprites, sprites_per_row, width, height):
 
-    cprint(f"w:{width},h:{height}", "green")
     sheet_width = width * sprites_per_row
     sheet_height = height * \
         ((len(sprites) + sprites_per_row - 1) // sprites_per_row)
